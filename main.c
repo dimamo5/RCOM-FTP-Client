@@ -8,11 +8,18 @@
 #include <signal.h>
 #include <netdb.h>
 #include <strings.h>
+#include <fcntl.h>
 
 #include "clientTCP.h"
 #include "parser.h"
 #include "getip.h"
 #include "utils.h"
+#include "download.h"
+
+
+//TODO MENU COM TAMANHO DO BUFFER (NAO PODE SER SUPERIOR A 8000) (8kBs)
+//COM USER A DECIDIR FILE NAME DO FICHEIRO GUARDADO DEPOIS DE DW
+//ETC
 
 int main(int argc, char** argv){
 
@@ -21,7 +28,7 @@ int main(int argc, char** argv){
 		return -1;
 	}
 
-	int	ret;
+	int	ret, fd;
 	char conx_ip[MAX_BUFFER_SIZE];
 	clientTCP client;
 
@@ -40,23 +47,28 @@ int main(int argc, char** argv){
 	getIP(client.host_address,conx_ip);
 	printf("Got ip\n");
 
-	//printf("hostadress: %s\nip: %s\n",client.host_address,conx_ip);
-	return 0;
+	printf("hostadress: %s\nip: %s\n",client.host_address,conx_ip);
 
    	/* callback to login function to server */
-	login_communication(conx_ip);
+	login_communication(conx_ip, &client);
+	
 
+	/* Enter passive mode */
+	enable_passive_mode(&client);
 
-	/* callback TO  CONNECTION DOWNLOAD/IP */
-	//ret = download_communication(dw_ip);
+	/* callback to connetion download */
+	download_communication(&client);
 
-	/* callback to download function dat returns when finished downloading file*/
-	/*int dw_file_fd = open("testfile.txt", O_WRONLY);
-	download(dw_socket_fd, dw_file_fd);*/
+	/* creates file vesile to download data */
+	fd = open("sum2.html", O_CREAT|O_WRONLY, 0666);
 
+	/* callback to download that creates a file, reads from server and writes to file*/
+	download(client.dw_socket_fd, fd);
 
-	/* callback to quit function */
+	/* callback to quit function */	
 	return quit(&client);
+
+	//TODO: DESCOMENTAR LINHA DA FUNCAO QUIT (close(..))
 }
 
 

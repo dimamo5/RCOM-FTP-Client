@@ -13,7 +13,6 @@ int url_input_validator(char* url){
 	regex_t regex;
 
 	/* Compile regular expression */
-
 	reti = regcomp(&regex, valid_regEx, REG_EXTENDED);
     if( reti ){ fprintf(stderr, "Could not compile regex\n"); return -1; }
 
