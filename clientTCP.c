@@ -134,14 +134,14 @@ int download_communication(clientTCP * client){
 	/*   cmd retrieve file   */
 	sprintf(cmd, "%s %s\n", RETR, client->sv_file_path);
 	
-	printf("%s\n",cmd);
+	printf("%s",cmd);
 
 	write_cmd(client->cmd_socket_fd, cmd);
 	code = read_reply(client->cmd_socket_fd);
 
 	if(code != RETR_SUCCESS){
 		fprintf(stderr, "Error retrieving file. Try checking the file path.\n" );
-		exit(1);
+		return -1;
 	}
 
 	/* estabelece conexao via scoket com porto de download */
@@ -157,9 +157,11 @@ int quit(clientTCP * client){
 	write(client->cmd_socket_fd, QUIT, sizeof(QUIT));
 	//TODO verificar retorno do write
 
+
 	//TODO resposta do quit
 	char quit_answer[MAX_BUFFER_SIZE];
 	read(client->cmd_socket_fd, quit_answer, MAX_BUFFER_SIZE);
+
 
 	//TODO se quit_answer estiver fixe close sockets
 

@@ -51,13 +51,15 @@ int main(int argc, char** argv){
 
    	/* callback to login function to server */
 	login_communication(conx_ip, &client);
-	
+
 
 	/* Enter passive mode */
-	enable_passive_mode(&client);
+	enable_passive_mode(&client);	
 
 	/* callback to connetion download */
-	download_communication(&client);
+	if(download_communication(&client)){
+		return quit(&client);
+	}
 
 	/* creates file vesile to download data */
 	fd = open("sum2.html", O_CREAT|O_WRONLY, 0666);
