@@ -61,7 +61,7 @@ int read_reply(int sock_fd){
 	}
 
 	sscanf(reply, "%d %s", &reply_code, ignore);
-	printf("%s\n",reply);
+	//printf("%s\n",reply);
 	return reply_code;
 }
 
@@ -120,7 +120,7 @@ int enable_passive_mode(clientTCP * client){
 	strcpy(client->dw_ip, ip_str);
 	client->dw_port = 256*port[0]+port[1];
 
-	printf("%s\n%s %d\n",reply,client->dw_ip,client->dw_port);
+	//printf("%s\n%s %d\n",reply,client->dw_ip,client->dw_port);
 
 	return 0;
 }
@@ -131,10 +131,14 @@ int download_communication(clientTCP * client){
 	char cmd[MAX_BUFFER_SIZE];
 	int code;
 
+	/* estabelece conexao via scoket com porto de download */
+	client->dw_socket_fd = create_connection_socket(client->dw_ip, client->dw_port);
+	//read_reply(client->dw_socket_fd); //le resposta do connect e ignora
+
 	/*   cmd retrieve file   */
 	sprintf(cmd, "%s %s\n", RETR, client->sv_file_path);
 	
-	printf("%s",cmd);
+	//printf("%s",cmd);
 
 	write_cmd(client->cmd_socket_fd, cmd);
 	code = read_reply(client->cmd_socket_fd);
@@ -143,10 +147,6 @@ int download_communication(clientTCP * client){
 		fprintf(stderr, "Error retrieving file. Try checking the file path.\n" );
 		return -1;
 	}
-
-	/* estabelece conexao via scoket com porto de download */
-	client->dw_socket_fd = create_connection_socket(client->dw_ip, client->dw_port);
-	read_reply(client->dw_socket_fd); //le resposta do connect e ignora
 
 	return 0;
 }

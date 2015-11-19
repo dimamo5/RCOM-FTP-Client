@@ -57,7 +57,7 @@ void get_info_from_string(char* argv, clientTCP * client){
 	 //parse filename_path
 	 strcpy(client->sv_file_path, path_begin+1);  //ja adiciona nulo terminador
 
-	 printf("usr:%s\npw:%s\nhost:%s\npath:%s\n",client->username,client->password, client->host_address,client->sv_file_path );
+	 //printf("usr:%s\npw:%s\nhost:%s\npath:%s\n",client->username,client->password, client->host_address,client->sv_file_path );
 }
 
 void parse_information(char* var_to_be_set, char* begin, int size){

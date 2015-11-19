@@ -66,6 +66,7 @@ int main(int argc, char** argv){
 
 	/* callback to download that creates a file, reads from server and writes to file*/
 	download(client.dw_socket_fd, fd);
+	printf("Succesfully received file.\n");
 
 	/* callback to quit function */	
 	return quit(&client);
