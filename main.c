@@ -62,7 +62,7 @@ int main(int argc, char** argv){
 	}
 
 	/* creates file vesile to download data */
-	fd = open("sum2.html", O_CREAT|O_WRONLY, 0666);
+	fd = open(client.file_name, O_CREAT|O_WRONLY, 0666);
 
 	/* callback to download that creates a file, reads from server and writes to file*/
 	download(client.dw_socket_fd, fd);

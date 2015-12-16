@@ -26,6 +26,7 @@ typedef struct clientTCP_t {
 	char password[MAX_BUFFER_SIZE];
 	char host_address[MAX_BUFFER_SIZE];
 	char sv_file_path[MAX_BUFFER_SIZE];
+	char file_name[MAX_BUFFER_SIZE];
 
 	int cmd_socket_fd;
 	int dw_socket_fd;

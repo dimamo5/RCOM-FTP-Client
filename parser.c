@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <libgen.h>
 
 #include "parser.h"
 
@@ -59,7 +60,7 @@ void get_info_from_string(char* argv, clientTCP * client){
 	   memcpy(client->password, CLIENT_PW_DEFAULT, strlen(CLIENT_PW_DEFAULT)+1); 
 	 }
 	 		
-	 path_begin = strchr(argv+=6,'/'); //ignora primeiros //
+	 path_begin = strchr(argv+=6,'/'); //ignora primeiro //
 
 	 //parse hostname
 	 num_bytes = (path_begin - host_begin) - 1;
@@ -68,7 +69,11 @@ void get_info_from_string(char* argv, clientTCP * client){
 
 	 //parse filename_path
 	 strcpy(client->sv_file_path, path_begin+1);  //ja adiciona nulo terminador
-		 
+	
+	 char* filename;
+	 filename = basename(client->sv_file_path);
+	
+	 strcpy(client->file_name,filename);
 	 //printf("usr:%s\npw:%s\nhost:%s\npath:%s\n",client->username,client->password, client->host_address,client->sv_file_path );
 }
 
