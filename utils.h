@@ -2,7 +2,7 @@
 #define _UTILS_H
 
 #define USAGE "usage: download ftp://[<user>:<password>@]<host>/<url-path>\n"
-#define valid_regEx "ftp://[[A-Za-z0-9]+:[A-Za-z0-9]+@][A-Za-z0-9._~:?#@!$&'()*+,:;=-]+/[A-Za-z0-9._~:?#@!$&'()*+,:;=-]+"
+#define valid_regEx "ftp://([A-Za-z0-9]+:[A-Za-z0-9]+@)?[A-Za-z0-9._~:?#@!$&'()*+,:;=-]+/[A-Za-z0-9._~:?#@!$&'()*+,:;=-]+"
 
 #define MAX_BUFFER_SIZE 256
 #define SERVER_PORT 21
@@ -15,6 +15,9 @@
 
 #define USER_LOGGED 230
 #define RETR_SUCCESS 150
+
+#define CLIENT_USERNAME_DEFAULT "ftp"
+#define CLIENT_PW_DEFAULT "PASSWORD"   //password do caso default é 1 qq, apenas username é fixo : "ftp"
 
 typedef struct clientTCP_t {
 
